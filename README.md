@@ -6,4 +6,4 @@
 
 ## Credits
 
-Slime Simulation by [@SebastianLague] (https://github.com/SebLague)
+Slime Simulation by [@SebastianLague](https://github.com/SebLague)
