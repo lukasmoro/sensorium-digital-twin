@@ -1,0 +1,7 @@
+https://api.figma.com/v1/images/Nj1pHeqN1yCnQ2PMN0bRTN?ids=818:1555&format=png&scale=4
+{
+    "err": null,
+    "images": {
+        "818:1555": "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/c3acb627-8430-4462-94e7-6d8b020ed672"
+    }
+}
