@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class KeypressEmissionBlink : MonoBehaviour
 {
@@ -8,13 +9,12 @@ public class KeypressEmissionBlink : MonoBehaviour
     public Color targetColor = Color.red;
     public float blinkSpeed = 1f;
     private float currentLerpTime = 0f;
-    private bool shouldBlink = false; 
+    private bool shouldBlink = false;
+    private bool isWaitingToStartBlink = false;
 
     private void Start()
     {
-        renderer = GetComponent<Renderer>();
-
-        if (renderer != null)
+        if (TryGetComponent<Renderer>(out renderer))
         {
             material = renderer.material;
         }
@@ -26,26 +26,35 @@ public class KeypressEmissionBlink : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isWaitingToStartBlink)
         {
-            shouldBlink = !shouldBlink;
+            StartCoroutine(DelayedBlinkStart(5f));
         }
 
         if (material != null && shouldBlink)
         {
-            Color newColor = EaseInOutLerp(baseColor, targetColor, currentLerpTime);
+            BlinkLogic();
+        }
+    }
 
-            material.SetColor("_EmissionColor", newColor);
+    private IEnumerator DelayedBlinkStart(float delay)
+    {
+        isWaitingToStartBlink = true;
+        yield return new WaitForSeconds(delay);
+        shouldBlink = !shouldBlink;
+        isWaitingToStartBlink = false;
+    }
 
-            currentLerpTime += Time.deltaTime * blinkSpeed;
+    private void BlinkLogic()
+    {
+        Color newColor = EaseInOutLerp(baseColor, targetColor, currentLerpTime);
+        material.SetColor("_EmissionColor", newColor);
+        currentLerpTime += Time.deltaTime * blinkSpeed;
 
-            if (currentLerpTime >= 1f)
-            {
-                currentLerpTime = 0f;
-                Color tempColor = baseColor;
-                baseColor = targetColor;
-                targetColor = tempColor;
-            }
+        if (currentLerpTime >= 1f)
+        {
+            currentLerpTime = 0f;
+            (targetColor, baseColor) = (baseColor, targetColor);
         }
     }
 

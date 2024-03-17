@@ -92,8 +92,6 @@ public class ContentManager : MonoBehaviour
                 hapticlabs.SetTrackNameElement3();
                 hapticlabs.SendMessageToHapticlabs();
                 hapticDisplay.text = "Haptic Event: Data in Hand";
-
-
                 StartCoroutine(IndicatorOn(leapMaterial, grabPoseColor));
             }
 
