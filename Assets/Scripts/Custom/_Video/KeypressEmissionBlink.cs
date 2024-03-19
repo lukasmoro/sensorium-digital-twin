@@ -26,9 +26,9 @@ public class KeypressEmissionBlink : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isWaitingToStartBlink)
+        if (Input.GetKeyDown(KeyCode.S) && !isWaitingToStartBlink)
         {
-            StartCoroutine(DelayedBlinkStart(5f));
+            StartCoroutine(DelayedBlinkStart(10f));
         }
 
         if (material != null && shouldBlink)

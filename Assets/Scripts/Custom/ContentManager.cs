@@ -64,7 +64,8 @@ public class ContentManager : MonoBehaviour
     public RectTransform steeringAngleIndicator2a;
     public RectTransform steeringAngleIndicator2b;
     public AudioSource audioSource;
-    public bool tagScanned = false;
+    // set back to false when used with rfid scanner
+    public bool tagScanned = true;
     public bool drivingActive = false;
     private int currentSpeed = 0;
 
@@ -83,16 +84,16 @@ public class ContentManager : MonoBehaviour
         Color grabPoseColor = Color.red;
         Color releasePoseColor = Color.green;
         
-        if (tagScanned)
-        {   
+        // if (tagScanned)
+        // {   
             if(leapmotion.grabDetected && colliderBuckle.collisionDetected) 
             {
                 poseDisplay.text = "Handtracking Pose: Grab";
-                
+
                 hapticlabs.SetTrackNameElement3();
                 hapticlabs.SendMessageToHapticlabs();
                 hapticDisplay.text = "Haptic Event: Data in Hand";
-                StartCoroutine(IndicatorOn(leapMaterial, grabPoseColor));
+                // StartCoroutine(IndicatorOn(leapMaterial, grabPoseColor));
             }
 
             else if (leapmotion.releaseDetected && colliderFront.collisionDetected)
@@ -100,8 +101,7 @@ public class ContentManager : MonoBehaviour
                 animatorVirtualUI.SetBool("Open Collective Canvas", true);
                 animatorPhysicalUI.SetBool("Open Collective Canvas", true);
                 poseDisplay.text = "Handtracking Pose: Release";
-                
-                StartCoroutine(IndicatorOn(leapMaterial, releasePoseColor));
+                // StartCoroutine(IndicatorOn(leapMaterial, releasePoseColor));
                 StartCoroutine(UpdateTachometerRandom());
             }
 
@@ -118,7 +118,7 @@ public class ContentManager : MonoBehaviour
 
             leapmotion.grabDetected = false;
             leapmotion.releaseDetected = false;
-        }
+        // }
     }
 
     // TCP messages from wearable
